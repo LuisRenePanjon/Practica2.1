@@ -3,19 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package practica2.pkg1;
+package Vista;
+
+import Controlador.GestionDato;
 
 /**
  *
  * @author Abuelito
  */
-public class Practica21 {
+public class Principal {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        GestionDato gD=new GestionDato();
+        VentanaPrincipal vp=new VentanaPrincipal("Gestion de Directorios y Archivos",gD);
+        vp.setVisible(true);
     }
+    
     
 }
