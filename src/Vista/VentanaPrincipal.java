@@ -43,27 +43,27 @@ public class VentanaPrincipal extends JFrame {
     private JTree nodo;
     private JScrollPane scroll;
     private JPanel panelinicial;
-    
 
     public VentanaPrincipal(String t, GestionDato gD) {
         this.setTitle(t);
-        this.setSize(600, 400);
+        this.setSize(700, 400);
         this.setDefaultCloseOperation(3);
         this.gD = gD;
         IniciaComponente();
         this.getContentPane().setBackground(Color.red);
-        
+
     }
 
     public void IniciaComponente() {
 
         this.panelinicial = new JPanel(new BorderLayout());
-        JPanel panelNorte=new JPanel(new BorderLayout());
-        
+
         this.etiquetaList = new ArrayList<JLabel>();
         this.etiquetaList.add(new JLabel("Software para la Gestión de Directorios y Archivos"));
         this.etiquetaList.add(new JLabel("      Destinatario: "));
         this.etiquetaList.add(new JLabel("      Nuevo Destinatario: "));
+        this.etiquetaList.add(new JLabel(" "));
+        
 
         this.txtList = new ArrayList<JTextField>();
         this.txtList.add(new JTextField(15));
@@ -74,23 +74,22 @@ public class VentanaPrincipal extends JFrame {
         this.botonList.add(new JButton("Borrar"));
         this.botonList.add(new JButton("Renombrar"));
         this.botonList.add(new JButton("Crear Carpeta"));
-        this.botonList.add(new JButton("Mostrar Tabla"));
-        
-       /*
-        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(this.txtList.get(0));
+        this.botonList.add(new JButton("MostrarTabla"));
+        /*
+        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(this.txtList.get(0).getText());
         DefaultMutableTreeNode rama = new DefaultMutableTreeNode(this.txtList.get(0) + "/");
         DefaultTreeModel model = new DefaultTreeModel(raiz);
         JTree arbol = new JTree(model);
         JScrollPane barra = new JScrollPane(arbol);*/
-        
-        LayoutManager disenio = new GridLayout(3,1);
-        LayoutManager disAccion = new  GridLayout(2,2);
-        LayoutManager disTitulo = new  FlowLayout();
-        
+
+        LayoutManager disenio = new GridLayout(2, 2);
+        LayoutManager disAccion = new GridLayout(2, 4);
+        LayoutManager disTitulo = new FlowLayout();
+
         JPanel pDisenio = new JPanel(disenio);
         JPanel pTitulo = new JPanel(disTitulo);
         JPanel pAccion = new JPanel(disAccion);
-       
+        
         this.treenode = new DefaultMutableTreeNode("padre");
         this.modeloarbol=new DefaultTreeModel(treenode);
         this.nodo=new JTree(this.modeloarbol);
@@ -105,7 +104,7 @@ public class VentanaPrincipal extends JFrame {
         this.modeloarbol.insertNodeInto(hijo1, hijo, 0);
         this.modeloarbol.insertNodeInto(hijo2, hijo, 1);
         this.modeloarbol.insertNodeInto(hijo4, hijo, 2);
-        
+
         this.botonList.get(0).addActionListener(new EventoVentanaPrincipal(this));
         this.botonList.get(1).addActionListener(new EventoVentanaPrincipal(this));
         this.botonList.get(2).addActionListener(new EventoVentanaPrincipal(this));
@@ -116,13 +115,16 @@ public class VentanaPrincipal extends JFrame {
         pAccion.add(this.txtList.get(0));
         pAccion.add(this.etiquetaList.get(2));
         pAccion.add(this.txtList.get(1));
+        pAccion.add(this.etiquetaList.get(3));
         pAccion.add(this.botonList.get(0));
         pAccion.add(this.botonList.get(1));
         pAccion.add(this.botonList.get(2));
         pAccion.add(this.botonList.get(3));
+        pAccion.add(this.botonList.get(4));
+        
         pDisenio.add(pTitulo);
         pDisenio.add(pAccion);
-        this.panelinicial.add(pDisenio,BorderLayout.NORTH);
+        this.panelinicial.add(pDisenio, BorderLayout.NORTH);
         this.panelinicial.add(this.scroll,BorderLayout.CENTER);
         this.add(this.panelinicial);
     }
@@ -190,6 +192,5 @@ public class VentanaPrincipal extends JFrame {
     public void setScroll(JScrollPane scroll) {
         this.scroll = scroll;
     }
-    
 
 }
