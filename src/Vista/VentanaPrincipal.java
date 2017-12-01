@@ -17,19 +17,22 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
  * @author SVAIO
  */
 public class VentanaPrincipal extends JFrame {
-    
+
     private List<JLabel> etiquetaList;
     private List<JTextField> txtList;
     private List<JButton> botonList;
     private GestionDato gD;
-    
 
     public VentanaPrincipal(String t, GestionDato gD) {
         this.setTitle(t);
@@ -40,21 +43,45 @@ public class VentanaPrincipal extends JFrame {
     }
 
     public void IniciaComponente() {
-        
+
         this.etiquetaList = new ArrayList<JLabel>();
         this.etiquetaList.add(new JLabel("Destinatario: "));
+        this.etiquetaList.add(new JLabel("Nuevo Destinatario: "));
+
         this.txtList = new ArrayList<JTextField>();
         this.txtList.add(new JTextField(15));
+        this.txtList.add(new JTextField(15));
         this.botonList = new ArrayList<JButton>();
-        this.botonList.add(new JButton("Crear"));
+
+        this.botonList.add(new JButton("Crear Archivo"));
         this.botonList.add(new JButton("Borrar"));
         this.botonList.add(new JButton("Renombrar"));
+        this.botonList.add(new JButton("Crear Carpeta"));
         JPanel panel = new JPanel();
+
+        DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(this.txtList.get(0));
+        DefaultMutableTreeNode rama = new DefaultMutableTreeNode(this.txtList.get(0) + "/");
+
+        DefaultTreeModel model = new DefaultTreeModel(raiz);
+
+        JTree arbol = new JTree(model);
+
+        JScrollPane barra = new JScrollPane(arbol);
+        this.botonList.get(0).addActionListener(new EventoVentanaPrincipal(this));
+        this.botonList.get(1).addActionListener(new EventoVentanaPrincipal(this));
+        this.botonList.get(2).addActionListener(new EventoVentanaPrincipal(this));
+        
+        this.botonList.get(3).addActionListener(new EventoVentanaPrincipal(this));
+
         panel.add(this.etiquetaList.get(0));
         panel.add(this.txtList.get(0));
+        panel.add(this.etiquetaList.get(1));
+        panel.add(this.txtList.get(1));
+
         panel.add(this.botonList.get(0));
         panel.add(this.botonList.get(1));
         panel.add(this.botonList.get(2));
+        panel.add(this.botonList.get(3));
         this.add(panel);
     }
 
@@ -90,5 +117,4 @@ public class VentanaPrincipal extends JFrame {
         this.gD = gD;
     }
 
-    
 }
