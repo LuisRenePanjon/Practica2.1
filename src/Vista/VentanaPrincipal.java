@@ -7,6 +7,11 @@ package Vista;
 
 import Controlador.EventoVentanaPrincipal;
 import Controlador.GestionDato;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -33,6 +38,12 @@ public class VentanaPrincipal extends JFrame {
     private List<JTextField> txtList;
     private List<JButton> botonList;
     private GestionDato gD;
+    private DefaultTreeModel modeloarbol;
+    private DefaultMutableTreeNode treenode;
+    private JTree nodo;
+    private JScrollPane scroll;
+    private JPanel panelinicial;
+    
 
     public VentanaPrincipal(String t, GestionDato gD) {
         this.setTitle(t);
@@ -40,13 +51,19 @@ public class VentanaPrincipal extends JFrame {
         this.setDefaultCloseOperation(3);
         this.gD = gD;
         IniciaComponente();
+        this.getContentPane().setBackground(Color.red);
+        
     }
 
     public void IniciaComponente() {
 
+        this.panelinicial = new JPanel(new BorderLayout());
+        JPanel panelNorte=new JPanel(new BorderLayout());
+        
         this.etiquetaList = new ArrayList<JLabel>();
-        this.etiquetaList.add(new JLabel("Destinatario: "));
-        this.etiquetaList.add(new JLabel("Nuevo Destinatario: "));
+        this.etiquetaList.add(new JLabel("Software para la Gestión de Directorios y Archivos"));
+        this.etiquetaList.add(new JLabel("      Destinatario: "));
+        this.etiquetaList.add(new JLabel("      Nuevo Destinatario: "));
 
         this.txtList = new ArrayList<JTextField>();
         this.txtList.add(new JTextField(15));
@@ -57,32 +74,57 @@ public class VentanaPrincipal extends JFrame {
         this.botonList.add(new JButton("Borrar"));
         this.botonList.add(new JButton("Renombrar"));
         this.botonList.add(new JButton("Crear Carpeta"));
-        JPanel panel = new JPanel();
-
+        this.botonList.add(new JButton("Mostrar Tabla"));
+        
+       /*
         DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(this.txtList.get(0));
         DefaultMutableTreeNode rama = new DefaultMutableTreeNode(this.txtList.get(0) + "/");
-
         DefaultTreeModel model = new DefaultTreeModel(raiz);
-
         JTree arbol = new JTree(model);
-
-        JScrollPane barra = new JScrollPane(arbol);
+        JScrollPane barra = new JScrollPane(arbol);*/
+        
+        LayoutManager disenio = new GridLayout(3,1);
+        LayoutManager disAccion = new  GridLayout(2,2);
+        LayoutManager disTitulo = new  FlowLayout();
+        
+        JPanel pDisenio = new JPanel(disenio);
+        JPanel pTitulo = new JPanel(disTitulo);
+        JPanel pAccion = new JPanel(disAccion);
+       
+        this.treenode = new DefaultMutableTreeNode("padre");
+        this.modeloarbol=new DefaultTreeModel(treenode);
+        this.nodo=new JTree(this.modeloarbol);
+        this.scroll=new JScrollPane(this.nodo);
+        DefaultMutableTreeNode hijo=new DefaultMutableTreeNode("padre");
+        DefaultMutableTreeNode hijo1=new DefaultMutableTreeNode("hijo");
+        DefaultMutableTreeNode hijo2=new DefaultMutableTreeNode("hijo2");
+        DefaultMutableTreeNode hijo3=new DefaultMutableTreeNode("hijo3");
+        DefaultMutableTreeNode hijo4=new DefaultMutableTreeNode("hijo4");
+        this.modeloarbol.insertNodeInto(hijo, this.treenode, 0);
+        this.modeloarbol.insertNodeInto(hijo3, this.treenode, 1);
+        this.modeloarbol.insertNodeInto(hijo1, hijo, 0);
+        this.modeloarbol.insertNodeInto(hijo2, hijo, 1);
+        this.modeloarbol.insertNodeInto(hijo4, hijo, 2);
+        
         this.botonList.get(0).addActionListener(new EventoVentanaPrincipal(this));
         this.botonList.get(1).addActionListener(new EventoVentanaPrincipal(this));
         this.botonList.get(2).addActionListener(new EventoVentanaPrincipal(this));
-        
         this.botonList.get(3).addActionListener(new EventoVentanaPrincipal(this));
 
-        panel.add(this.etiquetaList.get(0));
-        panel.add(this.txtList.get(0));
-        panel.add(this.etiquetaList.get(1));
-        panel.add(this.txtList.get(1));
-
-        panel.add(this.botonList.get(0));
-        panel.add(this.botonList.get(1));
-        panel.add(this.botonList.get(2));
-        panel.add(this.botonList.get(3));
-        this.add(panel);
+        pTitulo.add(this.etiquetaList.get(0));
+        pAccion.add(this.etiquetaList.get(1));
+        pAccion.add(this.txtList.get(0));
+        pAccion.add(this.etiquetaList.get(2));
+        pAccion.add(this.txtList.get(1));
+        pAccion.add(this.botonList.get(0));
+        pAccion.add(this.botonList.get(1));
+        pAccion.add(this.botonList.get(2));
+        pAccion.add(this.botonList.get(3));
+        pDisenio.add(pTitulo);
+        pDisenio.add(pAccion);
+        this.panelinicial.add(pDisenio,BorderLayout.NORTH);
+        this.panelinicial.add(this.scroll,BorderLayout.CENTER);
+        this.add(this.panelinicial);
     }
 
     public List<JLabel> getEtiquetaList() {
@@ -116,5 +158,38 @@ public class VentanaPrincipal extends JFrame {
     public void setgD(GestionDato gD) {
         this.gD = gD;
     }
+
+    public DefaultTreeModel getModeloarbol() {
+        return modeloarbol;
+    }
+
+    public void setModeloarbol(DefaultTreeModel modeloarbol) {
+        this.modeloarbol = modeloarbol;
+    }
+
+    public DefaultMutableTreeNode getTreenode() {
+        return treenode;
+    }
+
+    public void setTreenode(DefaultMutableTreeNode treenode) {
+        this.treenode = treenode;
+    }
+
+    public JTree getNodo() {
+        return nodo;
+    }
+
+    public void setNodo(JTree nodo) {
+        this.nodo = nodo;
+    }
+
+    public JScrollPane getScroll() {
+        return scroll;
+    }
+
+    public void setScroll(JScrollPane scroll) {
+        this.scroll = scroll;
+    }
+    
 
 }
