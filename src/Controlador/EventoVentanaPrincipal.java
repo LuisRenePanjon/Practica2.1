@@ -5,8 +5,6 @@
  */
 package Controlador;
 
-import Vista.VentanaArchivo;
-import Vista.VentanaDirectorio;
 import Vista.VentanaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,19 +25,6 @@ public class EventoVentanaPrincipal implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource().equals(this.vPrincipal.getMenuItemList().get(0)))
-            
-        {
-            VentanaArchivo vA= new VentanaArchivo(this.vPrincipal.getgD());
-            vA.setVisible(true);
-            this.vPrincipal.getEscritorio().add(vA);
-        }
-        if(e.getSource().equals(this.vPrincipal.getMenuItemList().get(1)))
-            
-        {
-            VentanaDirectorio vD= new VentanaDirectorio(this.vPrincipal.getgD());
-            vD.setVisible(true);            
-            this.vPrincipal.add(vD);
-        }
+        
     }
 }

@@ -6,8 +6,6 @@
 package Vista;
 
 import Controlador.GestionDato;
-import Modelo.Archivo;
-import Modelo.Directorio;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +20,8 @@ public class Principal {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        List<Archivo> aL=new ArrayList<Archivo>();
-        List<Directorio> dL=new ArrayList<Directorio>();
         
-        GestionDato gD=new GestionDato(aL, dL);
+        GestionDato gD=new GestionDato();
         VentanaPrincipal vp=new VentanaPrincipal("Gestion de Directorios y Archivos",gD);
         vp.setVisible(true);
     }
