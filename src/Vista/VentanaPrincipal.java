@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -44,6 +45,7 @@ public class VentanaPrincipal extends JFrame {
     private JScrollPane scroll;
     private JPanel panelinicial;
 
+    
     public VentanaPrincipal(String t, GestionDato gD) {
         this.setTitle(t);
         this.setSize(700, 400);
@@ -109,6 +111,7 @@ public class VentanaPrincipal extends JFrame {
         this.botonList.get(1).addActionListener(new EventoVentanaPrincipal(this));
         this.botonList.get(2).addActionListener(new EventoVentanaPrincipal(this));
         this.botonList.get(3).addActionListener(new EventoVentanaPrincipal(this));
+        this.botonList.get(4).addActionListener(new EventoVentanaPrincipal(this));
 
         pTitulo.add(this.etiquetaList.get(0));
         pAccion.add(this.etiquetaList.get(1));
@@ -129,6 +132,25 @@ public class VentanaPrincipal extends JFrame {
         this.add(this.panelinicial);
     }
 
+    public File validar(File list ){
+       
+        if(list.isFile()){
+            DefaultMutableTreeNode hijo= new DefaultMutableTreeNode(list.getName());
+            this.modeloarbol.insertNodeInto(hijo, this.treenode, 0);
+            System.out.println(list.getPath());
+        return list;
+        
+        }else if(list.isDirectory()){
+            DefaultMutableTreeNode  hijo= new DefaultMutableTreeNode(list.getName());
+            DefaultMutableTreeNode  hij1= new DefaultMutableTreeNode(list.getName());
+            this.modeloarbol.insertNodeInto(hijo, this.treenode, 0);
+            this.modeloarbol.insertNodeInto(hij1, hijo, 0);
+           System.out.println(list.getPath());
+           for(File as: list.listFiles())
+            validar(as);
+        }
+            return list;
+    }
     public List<JLabel> getEtiquetaList() {
         return etiquetaList;
     }
